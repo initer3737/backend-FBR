@@ -8,7 +8,7 @@ import (
 
 func Route__initialize(R * fiber.App){
 			//keuntungan menggunakkan methode dibawah adalah tidak boros import export cukup panggil package controllers tapi harus membuat variable yang menampung data dari controller yang akan dipanggil
-	R.Get("/",Controllers.AnimeControllers.AnimeChars)
+	R.Get("/animes",Controllers.AnimeControllers.AnimeChars)
 		AisatsuController:=Controllers.NewAisatsuController()
 
 	R.Get("/",AisatsuController.Jikoshoukai)
