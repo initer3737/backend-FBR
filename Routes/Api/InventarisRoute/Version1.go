@@ -14,4 +14,5 @@ func Inventaris__ApiV1__Initialize(R *fiber.App){
 		V1.Get("/:id",Controller.Show)
 		V1.Post("/",Controller.Create)
 		V1.Get("/inventaris/delete/:id",Controller.Destroy)
+		V1.Put("/inventaris/update/:id",Controller.Update)
 }

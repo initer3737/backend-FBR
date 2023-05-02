@@ -1,6 +1,7 @@
 package Controllers
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -97,7 +98,13 @@ func (InventarisController *InventarisController)Create(c *fiber.Ctx)error{
 }
 
 func (InventarisController *InventarisController)Update(c *fiber.Ctx)error{
-		//id:=c.Params("id")
+		id:=c.Params("id") //return string must be convert to uint first
+			find:=Database.DB.First(&InventarisEntity,"id=?",id)
+		  if find.Error != nil{
+			return c.Status(404).JSON(fiber.Map{
+				"message":"data not found",
+			})
+		  }	
 		request:=new(Requests.InventarisRequest)
 		body:=c.BodyParser(request)
 		if body != nil{
@@ -111,12 +118,19 @@ func (InventarisController *InventarisController)Update(c *fiber.Ctx)error{
 			})
 		}
 		//updating
-		// updating:=&InventarisEntity{
-		// 	request.Nama_Barang:,
-		// }
-
-		message:="updated successfully"
-		// updatingdata:=Database.DB.Model(&InventarisEntity).Where("id=?",id).Updates(updaupdating)
+		var InventarisEntityUpdate Inventaris.InventarisEntity
+		 message:="updated successfully"
+		 			//converting process
+		 		convertStringToUint,_:=strconv.Atoi(id)
+			InventarisEntityUpdate.ID = uint(convertStringToUint)
+			InventarisEntityUpdate.Nama_Barang = request.Nama_Barang
+			
+		updatingdata:=Database.DB.Save(&InventarisEntityUpdate)
+		if updatingdata.Error != nil{
+			return c.Status(400).JSON(fiber.Map{
+				"message":"bad request",
+			})
+		}
 	return c.JSON(fiber.Map{
 		"message":message,
 	})
