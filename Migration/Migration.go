@@ -9,7 +9,7 @@ import (
 )
 
 func RunMigrations(){
-	err:=Database.DB.AutoMigrate(&Inventaris.InventarisModel{})
+	err:=Database.DB.AutoMigrate(&Inventaris.InventarisEntity{})
 	if err != nil{
 		log.Fatal(err)
 	}
