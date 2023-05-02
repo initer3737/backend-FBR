@@ -124,7 +124,11 @@ func (InventarisController *InventarisController)Update(c *fiber.Ctx)error{
 		 		convertStringToUint,_:=strconv.Atoi(id)
 			InventarisEntityUpdate.ID = uint(convertStringToUint)
 			InventarisEntityUpdate.Nama_Barang = request.Nama_Barang
-			
+			InventarisEntityUpdate.Image = request.Image
+			InventarisEntityUpdate.Kategory =request.Kategory
+			InventarisEntityUpdate.Price =request.Price
+			InventarisEntityUpdate.Stock =request.Stock
+
 		updatingdata:=Database.DB.Save(&InventarisEntityUpdate)
 		if updatingdata.Error != nil{
 			return c.Status(400).JSON(fiber.Map{
